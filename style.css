@@ -1,0 +1,168 @@
+/* import font */
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+*, *::after, *::before{
+    box-sizing: border-box;
+}
+
+body{
+    margin:0
+}
+
+:root{
+    --box-size: 150px;
+    --mark-size: calc(var(--box-size)*0.9);
+}
+
+.board{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3,auto);
+
+}
+
+.box{
+    width: var(--box-size);
+    height: var(--box-size);
+    border: 7px solid black;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.box:nth-child(1),
+.box:nth-child(2),
+.box:nth-child(3){
+    border-top: none;
+}
+.box:nth-child(1),
+.box:nth-child(4),
+.box:nth-child(7){
+    border-left: none;
+}
+.box:nth-child(3),
+.box:nth-child(6),
+.box:nth-child(9){
+    border-right: none;
+}
+.box:nth-child(7),
+.box:nth-child(8),
+.box:nth-child(9){
+    border-bottom: none;
+}
+
+.box.x,
+.box.o{
+    cursor: not-allowed;
+}
+
+.board.x .box:not(.x):not(.o):hover::before,
+.board.x .box:not(.x):not(.o):hover::after,
+.board.o .box:not(.x):not(.o):hover::before{
+    background-color: lightgrey;
+}
+
+/* x styling */
+.box.x::before,
+.box.x::after,
+.board.x .box:not(.x):not(.o):hover::before,
+.board.x .box:not(.x):not(.o):hover::after{
+    content: '';
+    width: calc(var(--mark-size)*.15);
+    height: var(--mark-size);
+    position: absolute;
+}
+.box.box.x::before,
+.board.x .box:not(.x):not(.o):hover::before{
+    transform: rotate(45deg);
+}
+.box.box.x::after,
+.board.x .box:not(.x):not(.o):hover::after{
+    transform: rotate(-45deg);
+}
+.box.x::before,
+.box.x::after{
+    background-color: red;
+}
+
+/* o styling */
+.box.o::before,
+.box.o::after,
+.board.o .box:not(.x):not(.o):hover::before,
+.board.o .box:not(.x):not(.o):hover::after{
+    content: '';
+    position: absolute;
+    border-radius: 100px;
+}
+.box.o::before,
+.board.o .box:not(.x):not(.o):hover::before{
+    width: calc(var(--mark-size)*.9);
+    height: calc(var(--mark-size)*.9);
+}
+.box.o::after,
+.board.o .box:not(.x):not(.o):hover::after{
+    width: calc(var(--mark-size)*.6);
+    height: calc(var(--mark-size)*.6);
+    background-color: white;
+}
+.box.o::before{
+    background-color: blue;
+}
+
+/* winning message */
+.winning-message{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+    font-family: 'Pangolin', cursive;
+}
+
+.winning-message button{
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+    border-radius: 30px;
+    font-family: 'Pangolin', cursive;
+}
+
+.winning-message button:hover{
+    background-color: black;
+    border-color: white;
+    color: white;
+}
+
+.winning-message.show{
+    display: flex;
+
+}
+
+/* media query */
+@media (max-width: 530px){
+    :root{
+        --box-size: 90px;
+    }
+
+    .box{
+        border: 5px solid black;
+        border-radius: 10px;
+    }
+}
